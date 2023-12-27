@@ -10,6 +10,6 @@
         android:id="@+id/detail_done"
         android:icon="@drawable/ic_done"
         android:title="Done"
-        app:showAsAction="withText"/>
+        app:showAsAction="ifRoom"/>
 
 </menu>
