@@ -1,11 +1,15 @@
 package com.example.notesapp.adapter
 
+import android.content.res.ColorStateList
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.notesapp.R
 import com.example.notesapp.databinding.NoteItemBinding
 import com.example.notesapp.entities.Note
 
@@ -17,7 +21,14 @@ class NoteAdapter(private val onItemClicked: (Note) -> Unit): ListAdapter<Note, 
             } else binding.tvTitle.text = note.title
             if(note.content == ""){
                 binding.tvContent.visibility = View.GONE
+                binding.tvTitle.setPadding(0,15,0,15)
             } else binding.tvContent.text = note.content
+            val noteColor = binding.root.resources.getColor(note.color)
+            if(noteColor != binding.root.resources.getColor(R.color.black)){
+                binding.noteLayout.setBackgroundColor(binding.root.resources.getColor(R.color.black))
+            }
+            binding.cardView.backgroundTintList = ColorStateList.valueOf(binding.root.resources.getColor(note.color))
+
         }
     }
 

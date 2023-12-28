@@ -1,5 +1,6 @@
 package com.example.notesapp.ui.fragment
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,19 +11,25 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.R
 import androidx.navigation.fragment.navArgs
+import com.example.notesapp.adapter.ColorAdapter
 import com.example.notesapp.database.NoteApplication
 import com.example.notesapp.databinding.FragmentNoteBinding
 import com.example.notesapp.entities.Note
 import com.example.notesapp.viewModel.NoteViewModel
 import com.example.notesapp.viewModel.NoteViewModelFactory
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 class NoteFragment : Fragment() {
     private lateinit var binding: FragmentNoteBinding
     private val navArgs: NoteFragmentArgs by navArgs()
+    private var color: Int = R.color.black
     private var title : String = ""
+    private var currentDate: String = ""
     lateinit var note: Note
     private val viewModel: NoteViewModel by activityViewModels {
         NoteViewModelFactory(
@@ -32,7 +39,7 @@ class NoteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentNoteBinding.inflate(inflater, container, false)
         topBarMenuItemClick()
@@ -44,7 +51,11 @@ class NoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val id = navArgs.id
         title = navArgs.title
+        binding.bottomAppBar.overflowIcon?.setTint(resources.getColor(R.color.white))
         binding.detailTopAppBar.setTitle(title)
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm")
+        currentDate = sdf.format(Date())
+        binding.tvDateTime.text = currentDate
         if(id != -1){
             bindItem(id)
         }
@@ -53,14 +64,18 @@ class NoteFragment : Fragment() {
     private fun bindItem(id: Int) {
         viewModel.retrieveItem(id).observe(viewLifecycleOwner){note ->
             this.note = note
-            bindTextView()
+            bindNoteScreen()
         }
     }
 
-    private fun bindTextView() {
+    private fun bindNoteScreen() {
         binding.apply {
             noteTitle.setText(note.title, TextView.BufferType.SPANNABLE)
             noteDetail.setText(note.content, TextView.BufferType.SPANNABLE)
+            binding.root.setBackgroundColor(resources.getColor(note.color))
+            binding.bottomAppBar.backgroundTintList = ColorStateList.valueOf(resources.getColor(note.color))
+            binding.detailAppBarLayout.setBackgroundColor(resources.getColor(note.color))
+
         }
     }
 
@@ -90,7 +105,9 @@ class NoteFragment : Fragment() {
             viewModel.updateItem(
                 note.id,
                 binding.noteTitle.text.toString(),
-                binding.noteDetail.text.toString()
+                binding.noteDetail.text.toString(),
+                currentDate,
+                color
             )
         }
         findNavController().navigate(R.id.action_noteFragment_to_homeFragment)
@@ -107,9 +124,32 @@ class NoteFragment : Fragment() {
                         .show()
                     true
                 }
+                R.id.detail_change_color -> {
+                    showColorPicker()
+                    true
+                }
                 else -> false
             }
         }
+    }
+
+    private fun showColorPicker() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(R.layout.color_picker_layout)
+        val rv = bottomSheetDialog.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rv_color)
+
+        val adapter = ColorAdapter {
+            color = it
+            binding.root.setBackgroundColor(resources.getColor(it))
+            binding.bottomAppBar.backgroundTintList = ColorStateList.valueOf(resources.getColor(it))
+            binding.detailAppBarLayout.setBackgroundColor(resources.getColor(it))
+
+        }
+        val list = ArrayList<Int>()
+        list.addAll(listColor)
+        adapter.colorList = list
+        rv?.adapter = adapter
+        bottomSheetDialog.show()
     }
 
     private fun deleteItem(item: Note) {
@@ -137,7 +177,9 @@ class NoteFragment : Fragment() {
         if(isEntryValid()){
             viewModel.addNewItem(
                 binding.noteTitle.text.toString(),
-                binding.noteDetail.text.toString()
+                binding.noteDetail.text.toString(),
+                currentDate,
+                color
             )
             findNavController().navigate(R.id.action_noteFragment_to_homeFragment)
         }
@@ -147,6 +189,25 @@ class NoteFragment : Fragment() {
         return viewModel.isEntryValid(
             binding.noteTitle.text.toString(),
             binding.noteDetail.text.toString()
+        )
+    }
+
+
+    companion object{
+        val listColor = listOf(
+            R.color.black,
+            R.color.note_red,
+            R.color.note_dark_brown,
+            R.color.note_brown,
+            R.color.dark_green,
+            R.color.note_green,
+            R.color.note_blue_green,
+            R.color.note_blue,
+            R.color.note_dark_blue,
+            R.color.note_purple,
+            R.color.note_pink,
+            R.color.note_yellow_gray,
+            R.color.note_gray
         )
     }
 }

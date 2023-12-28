@@ -6,5 +6,18 @@
     <color name="dark_green">#1C2A1C</color>
     <color name="light_gray">#BFC6BF</color>
     <color name="dark_gray">#989E98</color>
-    <color name="text">#373E40</color>
+    <color name="common_text">#373E40</color>
+    <color name="text">#E0E0E0</color>
+
+    <color name="note_red">#75182d</color>
+    <color name="note_brown">#682918</color>
+    <color name="note_dark_brown">#7c4a01</color>
+    <color name="note_green">#244d3b</color>
+    <color name="note_blue_green">#0c635d</color>
+    <color name="note_blue">#266279</color>
+    <color name="note_dark_blue">#0a1411</color>
+    <color name="note_purple">#482c5c</color>
+    <color name="note_pink">#6c384e</color>
+    <color name="note_yellow_gray">#4d453a</color>
+    <color name="note_gray">#242328</color>
 </resources>

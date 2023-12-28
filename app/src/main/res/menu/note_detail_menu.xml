@@ -4,12 +4,14 @@
     <item android:id="@+id/detail_pin"
         android:icon="@drawable/outline_push_pin_24"
         android:title="@string/detail_pin"
+        android:iconTint="@color/text"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/detail_done"
         android:icon="@drawable/ic_done"
         android:title="Done"
+        android:iconTint="@color/text"
         app:showAsAction="ifRoom"/>
 
 </menu>
