@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <item android:id="@+id/detail_add_image"
-        android:title="@string/pick_image"
+    <item
+        android:id="@+id/detail_add_image"
         android:icon="@drawable/ic_image"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/pick_image"
+        app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/detail_change_color"
-        android:title="@string/change_color"
+    <item
+        android:id="@+id/detail_change_color"
         android:icon="@drawable/ic_color"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/change_color"
+        app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/menu_id"
-        android:title="More">
-        <menu>
-            <item
-                android:icon="@drawable/ic_delete"
-                android:title="@string/delete"
-                android:id="@+id/detail_delete"/>
+    <item
+        android:id="@+id/detail_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/delete"
+        app:showAsAction="ifRoom" />
 
-            <item android:title="@string/share"
-                android:icon="@drawable/ic_share"
-                app:showAsAction="withText"
-                android:id="@+id/detail_share"/>
-        </menu>
-    </item>
+    <item android:id="@+id/detail_share"
+        android:icon="@drawable/ic_share"
+        android:title="@string/share"
+        app:showAsAction="ifRoom" />
 
-</menu>
+    </menu>
