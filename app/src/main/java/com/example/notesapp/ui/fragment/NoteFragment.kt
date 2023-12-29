@@ -1,16 +1,21 @@
 package com.example.notesapp.ui.fragment
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.R
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.notesapp.adapter.ColorAdapter
 import com.example.notesapp.database.NoteApplication
 import com.example.notesapp.databinding.FragmentNoteBinding
@@ -30,6 +35,15 @@ class NoteFragment : Fragment() {
     private var color: Int = R.color.black
     private var title : String = ""
     private var currentDate: String = ""
+    private var imagePath : String = ""
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {uri ->
+        if(uri != null){
+            Glide.with(requireContext()).load(uri).into(binding.noteImage)
+            imagePath = uri.toString()
+        } else {
+            Log.d("PhotoPicker", "No media selected")
+        }
+    }
     lateinit var note: Note
     private val viewModel: NoteViewModel by activityViewModels {
         NoteViewModelFactory(
@@ -72,10 +86,16 @@ class NoteFragment : Fragment() {
         binding.apply {
             noteTitle.setText(note.title, TextView.BufferType.SPANNABLE)
             noteDetail.setText(note.content, TextView.BufferType.SPANNABLE)
+            noteTime.setText(note.dateTime)
+            color = note.color
             binding.root.setBackgroundColor(resources.getColor(note.color))
             binding.bottomAppBar.backgroundTintList = ColorStateList.valueOf(resources.getColor(note.color))
             binding.detailAppBarLayout.setBackgroundColor(resources.getColor(note.color))
-
+            if(note.imgPath != ""){
+                imagePath = note.imgPath
+                binding.rvImages.visibility = View.VISIBLE
+                Glide.with(requireContext()).load(note.imgPath).into(binding.noteImage)
+            }
         }
     }
 
@@ -107,7 +127,8 @@ class NoteFragment : Fragment() {
                 binding.noteTitle.text.toString(),
                 binding.noteDetail.text.toString(),
                 currentDate,
-                color
+                color,
+                imagePath
             )
         }
         findNavController().navigate(R.id.action_noteFragment_to_homeFragment)
@@ -128,9 +149,20 @@ class NoteFragment : Fragment() {
                     showColorPicker()
                     true
                 }
+                R.id.detail_add_image -> {
+                    pickImage()
+                    true
+                }
                 else -> false
             }
         }
+    }
+
+    private fun pickImage() {
+        binding.rvImages.visibility = View.VISIBLE
+        pickMedia.launch(
+            PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly).build()
+        )
     }
 
     private fun showColorPicker() {
@@ -179,16 +211,20 @@ class NoteFragment : Fragment() {
                 binding.noteTitle.text.toString(),
                 binding.noteDetail.text.toString(),
                 currentDate,
-                color
+                color,
+                imagePath
             )
             findNavController().navigate(R.id.action_noteFragment_to_homeFragment)
         }
     }
 
     private fun isEntryValid() : Boolean{
+        if(binding.rvImages.visibility == View.VISIBLE){
+            return true
+        }
         return viewModel.isEntryValid(
             binding.noteTitle.text.toString(),
-            binding.noteDetail.text.toString()
+            binding.noteDetail.text.toString(),
         )
     }
 
