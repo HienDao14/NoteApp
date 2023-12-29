@@ -24,22 +24,22 @@ class NoteViewModel(private val dao: NoteDao): ViewModel() {
         return true
     }
 
-    private fun getUpdatedItemEntry(id: Int, title: String, detail: String, dateTime: String, color: Int): Note{
-        return Note(id, title, detail, dateTime, color = color)
+    private fun getUpdatedItemEntry(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String): Note{
+        return Note(id, title, detail, dateTime, color = color, imgPath = imgPath)
     }
 
-    fun updateItem(id: Int, title: String, detail: String, dateTime: String, color: Int){
-        val updatedItem = getUpdatedItemEntry(id, title, detail, dateTime, color)
+    fun updateItem(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String){
+        val updatedItem = getUpdatedItemEntry(id, title, detail, dateTime, color, imgPath)
         upsertNote(updatedItem)
     }
 
-    fun addNewItem(title: String, detail:String, dateTime: String, color: Int){
-        val newItem = getNewEntryItem(title, detail, dateTime, color)
+    fun addNewItem(title: String, detail:String, dateTime: String, color: Int, imgPath: String){
+        val newItem = getNewEntryItem(title, detail, dateTime, color, imgPath)
         upsertNote(newItem)
     }
 
-    private fun getNewEntryItem(title: String, detail: String, dateTime: String, color: Int) : Note{
-        return Note(title = title, content = detail, dateTime = dateTime, color = color)
+    private fun getNewEntryItem(title: String, detail: String, dateTime: String, color: Int, imgPath: String) : Note{
+        return Note(title = title, content = detail, dateTime = dateTime, color = color, imgPath = imgPath)
     }
 
     fun deleteItem(note: Note){

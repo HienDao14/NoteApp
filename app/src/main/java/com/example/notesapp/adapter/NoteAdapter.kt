@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.notesapp.R
 import com.example.notesapp.databinding.NoteItemBinding
 import com.example.notesapp.entities.Note
@@ -28,7 +30,10 @@ class NoteAdapter(private val onItemClicked: (Note) -> Unit): ListAdapter<Note, 
                 binding.noteLayout.setBackgroundColor(binding.root.resources.getColor(R.color.black))
             }
             binding.cardView.backgroundTintList = ColorStateList.valueOf(binding.root.resources.getColor(note.color))
-
+            if(note.imgPath != ""){
+                binding.imageCv.visibility = View.VISIBLE
+                Glide.with(binding.root.context).load(note.imgPath.toUri()).into(binding.noteIv)
+            }
         }
     }
 
