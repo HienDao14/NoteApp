@@ -21,9 +21,5 @@
         android:title="@string/delete"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/detail_share"
-        android:icon="@drawable/ic_share"
-        android:title="@string/share"
-        app:showAsAction="ifRoom" />
 
     </menu>

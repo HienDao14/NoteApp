@@ -33,18 +33,18 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="5dp"
-        app:cardCornerRadius="20dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/detail_app_bar_layout"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/detail_app_bar_layout">
 
         <ImageView
             android:id="@+id/note_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:src="@drawable/ys_and_teemo"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ys_and_teemo" />
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
@@ -93,8 +93,11 @@
                 android:id="@+id/note_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textCapSentences"
+                android:autoLink="web"
+                android:clickable="true"
+                android:imeOptions="actionNext"
                 android:gravity="top"
+                android:inputType="textCapSentences|textMultiLine"
                 android:textColor="@color/text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,22 +116,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black"
+            android:textAlignment="textEnd"
+            android:textDirection="firstStrong"
+            android:tooltipText="helloooooooo"
             app:menu="@menu/detail_bottom_menu"
-            app:menuAlignmentMode="start">
+            app:menuAlignmentMode="start"
+            app:title="@string/app_name">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/note_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="HienDao"
-                    android:textColor="@color/text"
-                    android:textSize="13sp" />
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/note_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="right"
+                android:text="HienDao"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 

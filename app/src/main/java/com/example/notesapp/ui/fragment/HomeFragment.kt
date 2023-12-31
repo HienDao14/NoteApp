@@ -53,5 +53,25 @@ class HomeFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
+
+        onBottomItemsClicked()
+    }
+
+    private fun onBottomItemsClicked() {
+        binding.bottomAppBar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.bottom_image_picker -> {
+                    onImagePickerClicked()
+                    true
+                }
+                else -> {
+                    true
+                }
+            }
+        }
+    }
+
+    private fun onImagePickerClicked() {
+        val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(-1, "Add Note")
     }
 }
