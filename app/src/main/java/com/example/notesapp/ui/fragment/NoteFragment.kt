@@ -1,8 +1,8 @@
 package com.example.notesapp.ui.fragment
 
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -56,8 +56,7 @@ class NoteFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentNoteBinding.inflate(inflater, container, false)
-        topBarMenuItemClick()
-        bottomBarMenuItemClick()
+
         return binding.root
     }
 
@@ -73,6 +72,13 @@ class NoteFragment : Fragment() {
         if(id != -1){
             bindItem(id)
         }
+        topBarMenuItemClick()
+        bottomBarMenuItemClick()
+        setOnLinkCLicked()
+    }
+
+    private fun setOnLinkCLicked() {
+        binding.noteDetail.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun bindItem(id: Int) {

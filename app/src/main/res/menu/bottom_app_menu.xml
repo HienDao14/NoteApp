@@ -7,7 +7,7 @@
         android:title="@string/task"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/bottom_image"
+    <item android:id="@+id/bottom_image_picker"
         android:icon="@drawable/ic_image"
         android:title="@string/pick_image"
         app:showAsAction="ifRoom"/>
