@@ -28,5 +28,11 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <argument
+            android:name="isAddingImage"
+            app:argType="boolean" />
+        <argument
+            android:name="speechtotext"
+            app:argType="string" />
     </fragment>
 </navigation>
