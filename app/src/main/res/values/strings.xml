@@ -16,4 +16,5 @@
     <string name="snackbar_none">There is no note to delete</string>
     <string name="snackbar_done">Successfully deleted!!!</string>
     <string name="color">Màu</string>
+    <string name="recode">speech to text</string>
 </resources>

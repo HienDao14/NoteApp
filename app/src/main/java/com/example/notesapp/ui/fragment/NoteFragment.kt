@@ -64,6 +64,13 @@ class NoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val id = navArgs.id
         title = navArgs.title
+        val isAddingImage = navArgs.isAddingImage
+        if(isAddingImage) {
+            pickImage()
+        }
+        val speechText = navArgs.speechtotext
+        binding.noteDetail.setText(speechText)
+        Log.d("NoteFragment", speechText)
         binding.bottomAppBar.overflowIcon?.setTint(resources.getColor(R.color.white))
         binding.detailTopAppBar.setTitle(title)
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm")
