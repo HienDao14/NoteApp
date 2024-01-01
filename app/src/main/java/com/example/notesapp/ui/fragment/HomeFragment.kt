@@ -63,6 +63,21 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.pinnedNotes.observe(viewLifecycleOwner){notes ->
+            if(notes.isNotEmpty()){
+                binding.pinnedLayout.visibility = View.VISIBLE
+                val pinnedAdapter = NoteAdapter{
+                    val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(it.id, "Update Note", false, "")
+                    findNavController().navigate(action)
+                }
+                binding.rvPinnedNotes.adapter = pinnedAdapter
+                notes.let{
+                    pinnedAdapter.submitList(it)
+                }
+            } else {
+                binding.pinnedLayout.visibility = View.GONE
+            }
+        }
         onBottomItemsClicked()
     }
 

@@ -36,6 +36,7 @@ class NoteFragment : Fragment() {
     private var title : String = ""
     private var currentDate: String = ""
     private var imagePath : String = ""
+    private var isPinned: Int = 0
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {uri ->
         if(uri != null){
             Glide.with(requireContext()).load(uri).into(binding.noteImage)
@@ -101,6 +102,7 @@ class NoteFragment : Fragment() {
             noteDetail.setText(note.content, TextView.BufferType.SPANNABLE)
             noteTime.setText(note.dateTime)
             color = note.color
+            isPinned = note.isPinned
             binding.root.setBackgroundColor(resources.getColor(note.color))
             binding.bottomAppBar.backgroundTintList = ColorStateList.valueOf(resources.getColor(note.color))
             binding.detailAppBarLayout.setBackgroundColor(resources.getColor(note.color))
@@ -125,6 +127,18 @@ class NoteFragment : Fragment() {
                     } else {
                         updateItem()
                     }
+                    true
+                }
+                R.id.detail_pin -> {
+                    if(isPinned == 0){
+                        isPinned = 1
+                        Snackbar.make(requireView(), R.string.pinned_success_noti, Snackbar.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        isPinned = 0
+                        Snackbar.make(requireView(), R.string.unpinned_success_noti, Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
 
                     true
                 }
@@ -141,7 +155,8 @@ class NoteFragment : Fragment() {
                 binding.noteDetail.text.toString(),
                 currentDate,
                 color,
-                imagePath
+                imagePath,
+                isPinned
             )
         }
         findNavController().navigate(R.id.action_noteFragment_to_homeFragment)
@@ -225,7 +240,8 @@ class NoteFragment : Fragment() {
                 binding.noteDetail.text.toString(),
                 currentDate,
                 color,
-                imagePath
+                imagePath,
+                isPinned
             )
             findNavController().navigate(R.id.action_noteFragment_to_homeFragment)
         }

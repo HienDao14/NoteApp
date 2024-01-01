@@ -17,4 +17,6 @@
     <string name="snackbar_done">Successfully deleted!!!</string>
     <string name="color">Màu</string>
     <string name="recode">speech to text</string>
+    <string name="pinned_success_noti">Pinned successfully!!</string>
+    <string name="unpinned_success_noti">Unpinned successfully!!!</string>
 </resources>
