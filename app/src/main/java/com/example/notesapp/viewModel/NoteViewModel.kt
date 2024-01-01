@@ -11,10 +11,19 @@ import kotlinx.coroutines.launch
 
 class NoteViewModel(private val dao: NoteDao): ViewModel() {
     val allNotes: LiveData<List<Note>> = dao.getAllNotes().asLiveData()
+    val pinnedNotes: LiveData<List<Note>> = dao.getPinnedNotes().asLiveData()
     private fun upsertNote(note: Note){
         viewModelScope.launch {
             dao.upsertNote(note)
         }
+    }
+
+    private fun getUpdatedItemEntry(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String, isPinned: Int): Note{
+        return Note(id, title, detail, dateTime, color = color, imgPath = imgPath, isPinned = isPinned)
+    }
+
+    private fun getNewEntryItem(title: String, detail: String, dateTime: String, color: Int, imgPath: String, isPinned: Int) : Note{
+        return Note(title = title, content = detail, dateTime = dateTime, color = color, imgPath = imgPath, isPinned = isPinned)
     }
 
     fun isEntryValid(title: String, detail: String): Boolean{
@@ -24,23 +33,16 @@ class NoteViewModel(private val dao: NoteDao): ViewModel() {
         return true
     }
 
-    private fun getUpdatedItemEntry(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String): Note{
-        return Note(id, title, detail, dateTime, color = color, imgPath = imgPath)
-    }
-
-    fun updateItem(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String){
-        val updatedItem = getUpdatedItemEntry(id, title, detail, dateTime, color, imgPath)
+    fun updateItem(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String, isPinned: Int){
+        val updatedItem = getUpdatedItemEntry(id, title, detail, dateTime, color, imgPath, isPinned)
         upsertNote(updatedItem)
     }
 
-    fun addNewItem(title: String, detail:String, dateTime: String, color: Int, imgPath: String){
-        val newItem = getNewEntryItem(title, detail, dateTime, color, imgPath)
+    fun addNewItem(title: String, detail:String, dateTime: String, color: Int, imgPath: String, isPinned: Int){
+        val newItem = getNewEntryItem(title, detail, dateTime, color, imgPath, isPinned)
         upsertNote(newItem)
     }
 
-    private fun getNewEntryItem(title: String, detail: String, dateTime: String, color: Int, imgPath: String) : Note{
-        return Note(title = title, content = detail, dateTime = dateTime, color = color, imgPath = imgPath)
-    }
 
     fun deleteItem(note: Note){
         viewModelScope.launch {

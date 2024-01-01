@@ -20,5 +20,7 @@ data class Note(
     @ColumnInfo(name = "web_link")
     var webLink: String = "",
     @ColumnInfo(name = "color")
-    var color: Int = R.color.black
+    var color: Int = R.color.black,
+    @ColumnInfo(name = "isPinned")
+    var isPinned : Int = 0
 )
