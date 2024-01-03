@@ -23,9 +23,15 @@
             android:layout_height="match_parent"
             android:minHeight="?attr/actionBarSize"
             app:title="@string/search"
+            android:clickable="true"
+            android:focusable="true"
             app:navigationIcon="@drawable/ic_menu"
             app:titleTextColor="@color/text"
-            app:titleTextAppearance="?attr/textAppearanceTitleMedium"/>
+            app:titleTextAppearance="?attr/textAppearanceTitleMedium">
+
+
+
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView

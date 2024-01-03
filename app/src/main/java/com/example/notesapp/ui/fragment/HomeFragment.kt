@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -22,6 +23,7 @@ import com.example.notesapp.R
 import com.example.notesapp.adapter.NoteAdapter
 import com.example.notesapp.database.NoteApplication
 import com.example.notesapp.databinding.FragmentHomeBinding
+import com.example.notesapp.entities.Note
 import com.example.notesapp.viewModel.NoteViewModel
 import com.example.notesapp.viewModel.NoteViewModelFactory
 import java.util.Locale
@@ -30,6 +32,8 @@ import java.util.Locale
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val RQ_SPECCH_REC = 1
+    private val notes : ArrayList<Note> = ArrayList()
+    private lateinit var adapter : NoteAdapter
     private val viewModel: NoteViewModel by activityViewModels {
         NoteViewModelFactory(
             (activity?.application as NoteApplication).databse.noteDao()
@@ -51,7 +55,7 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(-1, "Add Note", false, "")
             findNavController().navigate(action)
         }
-        val adapter = NoteAdapter{
+        adapter = NoteAdapter{
             val action = HomeFragmentDirections.actionHomeFragmentToNoteFragment(it.id, "Update Note", false, "")
             findNavController().navigate(action)
         }
@@ -79,6 +83,18 @@ class HomeFragment : Fragment() {
             }
         }
         onBottomItemsClicked()
+        onToolBarClicked()
+    }
+
+    private fun onToolBarClicked() {
+        binding.topAppBar.setNavigationOnClickListener {
+
+        }
+        binding.topAppBar.setOnClickListener {
+
+            val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun onBottomItemsClicked() {
