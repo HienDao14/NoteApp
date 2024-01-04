@@ -10,7 +10,9 @@ import com.example.notesapp.entities.Note
 import kotlinx.coroutines.launch
 
 class NoteViewModel(private val dao: NoteDao): ViewModel() {
+
     val allNotes: LiveData<List<Note>> = dao.getAllNotes().asLiveData()
+    val unpinnedNotes: LiveData<List<Note>> = dao.getAllUnpinnedNote().asLiveData()
     val pinnedNotes: LiveData<List<Note>> = dao.getPinnedNotes().asLiveData()
     private fun upsertNote(note: Note){
         viewModelScope.launch {

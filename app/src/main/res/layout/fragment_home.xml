@@ -89,7 +89,6 @@
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:spanCount="2"/>
 
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

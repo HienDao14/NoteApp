@@ -10,8 +10,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NoteDao {
 
+    @Query("SELECT * FROM notes")
+    fun getAllNotes(): Flow<List<Note>>
+
     @Query("SELECT * FROM notes WHERE isPinned = 0")
-    fun getAllNotes() : Flow<List<Note>>
+    fun getAllUnpinnedNote() : Flow<List<Note>>
 
     @Query("SELECT * FROM notes WHERE id=:id")
     fun getNoteById(id: Int): Flow<Note>
