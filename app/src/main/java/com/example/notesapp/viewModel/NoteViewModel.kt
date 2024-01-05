@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class NoteViewModel(private val dao: NoteDao): ViewModel() {
 
     val allNotes: LiveData<List<Note>> = dao.getAllNotes().asLiveData()
+    val allDeletedNotes: LiveData<List<Note>> = dao.getAllDeletedNotes().asLiveData()
     val unpinnedNotes: LiveData<List<Note>> = dao.getAllUnpinnedNote().asLiveData()
     val pinnedNotes: LiveData<List<Note>> = dao.getPinnedNotes().asLiveData()
     private fun upsertNote(note: Note){
@@ -20,8 +21,8 @@ class NoteViewModel(private val dao: NoteDao): ViewModel() {
         }
     }
 
-    private fun getUpdatedItemEntry(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String, isPinned: Int): Note{
-        return Note(id, title, detail, dateTime, color = color, imgPath = imgPath, isPinned = isPinned)
+    private fun getUpdatedItemEntry(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String, isPinned: Int, isDeleted: Int): Note{
+        return Note(id, title, detail, dateTime, color = color, imgPath = imgPath, isPinned = isPinned, isDeleted =  isDeleted)
     }
 
     private fun getNewEntryItem(title: String, detail: String, dateTime: String, color: Int, imgPath: String, isPinned: Int) : Note{
@@ -35,8 +36,8 @@ class NoteViewModel(private val dao: NoteDao): ViewModel() {
         return true
     }
 
-    fun updateItem(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String, isPinned: Int){
-        val updatedItem = getUpdatedItemEntry(id, title, detail, dateTime, color, imgPath, isPinned)
+    fun updateItem(id: Int, title: String, detail: String, dateTime: String, color: Int, imgPath: String, isPinned: Int, isDeleted: Int){
+        val updatedItem = getUpdatedItemEntry(id, title, detail, dateTime, color, imgPath, isPinned, isDeleted)
         upsertNote(updatedItem)
     }
 
@@ -49,6 +50,12 @@ class NoteViewModel(private val dao: NoteDao): ViewModel() {
     fun deleteItem(note: Note){
         viewModelScope.launch {
             dao.deleteNote(note)
+        }
+    }
+
+    fun clearAllDeletedNotes(){
+        viewModelScope.launch {
+            dao.clearAllDeletedNote()
         }
     }
 

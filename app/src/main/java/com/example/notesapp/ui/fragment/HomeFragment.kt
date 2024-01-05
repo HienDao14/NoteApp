@@ -7,13 +7,16 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.R
@@ -23,6 +26,7 @@ import com.example.notesapp.databinding.FragmentHomeBinding
 import com.example.notesapp.entities.Note
 import com.example.notesapp.viewModel.NoteViewModel
 import com.example.notesapp.viewModel.NoteViewModelFactory
+import com.google.android.material.navigation.NavigationView
 import java.util.Locale
 
 
@@ -43,6 +47,7 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
+        onToolBarClicked()
         return binding.root
     }
 
@@ -80,16 +85,34 @@ class HomeFragment : Fragment() {
             }
         }
         onBottomItemsClicked()
-        onToolBarClicked()
     }
 
     private fun onToolBarClicked() {
+        binding.navView.setCheckedItem(R.id.nav_view_home)
         binding.topAppBar.setNavigationOnClickListener {
-
+            binding.drawerLayout.open()
+            Log.d("HomeFragment", "Open")
+        }
+            binding.navView.setNavigationItemSelectedListener {menuItem ->
+                Log.d("HomeFragment", "Hehehehe")
+                when(menuItem.itemId){
+                    R.id.nav_view_home -> {
+                        Toast.makeText(context, "Home", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.nav_view_delete -> {
+                        val action = HomeFragmentDirections.actionHomeFragmentToDeletedFragment()
+                        findNavController().navigate(action)
+                    }
+                    else -> {
+                        Toast.makeText(context, "Image", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                menuItem.isChecked = true
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                true
         }
         binding.topAppBar.setOnClickListener {
-
-            val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment()
+             val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment()
             findNavController().navigate(action)
         }
     }
