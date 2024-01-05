@@ -1,7 +1,6 @@
 package com.example.notesapp.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +15,7 @@ import com.example.notesapp.databinding.FragmentSearchBinding
 import com.example.notesapp.entities.Note
 import com.example.notesapp.viewModel.NoteViewModel
 import com.example.notesapp.viewModel.NoteViewModelFactory
+import com.google.android.material.shape.MaterialShapeDrawable
 
 
 class SearchFragment : Fragment() {
@@ -44,11 +44,14 @@ class SearchFragment : Fragment() {
             val action = SearchFragmentDirections.actionSearchFragmentToNoteFragment(it.id, "Update Note", false, "")
             findNavController().navigate(action)
         }
-        viewModel.allNotes.observe(viewLifecycleOwner){listNote ->
+        viewModel.allNotes.observe(viewLifecycleOwner){ listNote ->
             listNote.let {
                 notes = it as ArrayList<Note>
             }
         }
+        binding.appBarLayout.setStatusBarForegroundColor(
+            resources.getColor(R.color.dark_gray)
+        )
         binding.rvSearchingNote.adapter = adapter
         binding.topAppBar.setNavigationOnClickListener {
             val action = SearchFragmentDirections.actionSearchFragmentToHomeFragment()
@@ -65,6 +68,11 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 var tempNotes = ArrayList<Note>()
+                if(newText == ""){
+                    adapter.submitList(tempNotes)
+                    adapter.notifyDataSetChanged()
+                    return true
+                }
                 for (note in notes){
                     if (note.title.lowercase().contains(newText?.lowercase().toString())
                         || note.content.lowercase().contains(newText?.lowercase().toString())){

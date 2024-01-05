@@ -22,5 +22,7 @@ data class Note(
     @ColumnInfo(name = "color")
     var color: Int = R.color.black,
     @ColumnInfo(name = "isPinned")
-    var isPinned : Int = 0
+    var isPinned : Int = 0,
+    @ColumnInfo(name = "isDeleted")
+    var isDeleted: Int = 0
 )

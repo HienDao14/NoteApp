@@ -125,7 +125,7 @@ class NoteFragment : Fragment() {
                     if(title == "Add Note"){
                         addNewItem()
                     } else {
-                        updateItem()
+                        updateItem(0)
                     }
                     true
                 }
@@ -147,7 +147,7 @@ class NoteFragment : Fragment() {
         }
     }
 
-    private fun updateItem() {
+    private fun updateItem(isDeleted: Int) {
         if (isEntryValid()) {
             viewModel.updateItem(
                 note.id,
@@ -156,7 +156,8 @@ class NoteFragment : Fragment() {
                 currentDate,
                 color,
                 imagePath,
-                isPinned
+                isPinned,
+                isDeleted
             )
         }
         findNavController().navigate(R.id.action_noteFragment_to_homeFragment)
@@ -212,11 +213,8 @@ class NoteFragment : Fragment() {
         bottomSheetDialog.show()
     }
 
-    private fun deleteItem(item: Note) {
-
-        viewModel.deleteItem(item)
-        val action = NoteFragmentDirections.actionNoteFragmentToHomeFragment()
-        findNavController().navigate(action)
+    private fun deleteItem() {
+        updateItem(1)
     }
 
     private fun showConfirmationDialog() {
@@ -228,7 +226,7 @@ class NoteFragment : Fragment() {
             .setPositiveButton(getString(R.string.yes)) { _, _ ->
                 Snackbar.make(requireView(), R.string.snackbar_done, Snackbar.LENGTH_SHORT)
                     .show()
-                deleteItem(note)
+                deleteItem()
             }
             .show()
     }
