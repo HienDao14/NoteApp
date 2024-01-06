@@ -204,7 +204,6 @@ class NoteFragment : Fragment() {
             binding.root.setBackgroundColor(resources.getColor(it))
             binding.bottomAppBar.backgroundTintList = ColorStateList.valueOf(resources.getColor(it))
             binding.detailAppBarLayout.setBackgroundColor(resources.getColor(it))
-
         }
         val list = ArrayList<Int>()
         list.addAll(listColor)

@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homeFragment_to_deletedFragment"
             app:destination="@id/deletedFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
@@ -63,6 +66,15 @@
             app:destination="@id/noteFragment" />
         <action
             android:id="@+id/action_deletedFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.example.notesapp.ui.fragment.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image" >
+        <action
+            android:id="@+id/action_imageFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

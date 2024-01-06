@@ -15,6 +15,7 @@ class NoteViewModel(private val dao: NoteDao): ViewModel() {
     val allDeletedNotes: LiveData<List<Note>> = dao.getAllDeletedNotes().asLiveData()
     val unpinnedNotes: LiveData<List<Note>> = dao.getAllUnpinnedNote().asLiveData()
     val pinnedNotes: LiveData<List<Note>> = dao.getPinnedNotes().asLiveData()
+    val allImages: LiveData<List<String>> = dao.getAllImages("").asLiveData()
     private fun upsertNote(note: Note){
         viewModelScope.launch {
             dao.upsertNote(note)

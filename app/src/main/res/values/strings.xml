@@ -21,4 +21,5 @@
     <string name="unpinned_success_noti">Unpinned successfully!!!</string>
     <string name="garbage">Thùng rác</string>
     <string name="delete_all">Dọn sạch thùng rác</string>
+    <string name="your_image">Ảnh của bạn</string>
 </resources>

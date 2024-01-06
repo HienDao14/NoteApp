@@ -25,6 +25,9 @@ interface NoteDao {
     @Query("SELECT * FROM notes WHERE isPinned = 1 AND isDeleted = 0")
     fun getPinnedNotes(): Flow<List<Note>>
 
+    @Query("SELECT img_path FROM notes WHERE isDeleted = 0 AND img_path != :s ")
+    fun getAllImages(s: String): Flow<List<String>>
+
     @Upsert
     suspend fun upsertNote(note: Note)
 
@@ -39,4 +42,5 @@ interface NoteDao {
 
     @Query("DELETE FROM notes WHERE isDeleted = 1")
     suspend fun clearAllDeletedNote()
+
 }
