@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/bottom_tick"
-        android:icon="@drawable/ic_tick"
-        android:title="@string/task"
+    <item android:id="@+id/bottom_voice_record"
+        android:icon="@drawable/ic_voice"
+        android:title="@string/recode"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/bottom_image"
+    <item android:id="@+id/bottom_image_picker"
         android:icon="@drawable/ic_image"
         android:title="@string/pick_image"
         app:showAsAction="ifRoom"/>

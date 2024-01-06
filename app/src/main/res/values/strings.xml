@@ -15,4 +15,11 @@
     <string name="yes">Yes</string>
     <string name="snackbar_none">There is no note to delete</string>
     <string name="snackbar_done">Successfully deleted!!!</string>
+    <string name="color">Màu</string>
+    <string name="recode">speech to text</string>
+    <string name="pinned_success_noti">Pinned successfully!!</string>
+    <string name="unpinned_success_noti">Unpinned successfully!!!</string>
+    <string name="garbage">Thùng rác</string>
+    <string name="delete_all">Dọn sạch thùng rác</string>
+    <string name="your_image">Ảnh của bạn</string>
 </resources>

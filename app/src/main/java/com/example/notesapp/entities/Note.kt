@@ -3,6 +3,7 @@ package com.example.notesapp.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.notesapp.R
 
 @Entity(tableName = "notes")
 data class Note(
@@ -19,5 +20,9 @@ data class Note(
     @ColumnInfo(name = "web_link")
     var webLink: String = "",
     @ColumnInfo(name = "color")
-    var color: String = ""
+    var color: Int = R.color.black,
+    @ColumnInfo(name = "isPinned")
+    var isPinned : Int = 0,
+    @ColumnInfo(name = "isDeleted")
+    var isDeleted: Int = 0
 )

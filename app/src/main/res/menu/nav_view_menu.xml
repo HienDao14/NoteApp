@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_view_menu"
+        android:title="Notes">
+        <menu>
+            <item android:id="@+id/nav_view_home"
+                android:title="Ghi chú"
+                android:icon="@drawable/ic_note_home"
+                android:checkable="true" />
+
+            <item android:id="@+id/nav_view_delete"
+                android:title="Thùng rác"
+                android:icon="@drawable/ic_delete"
+                android:checkable="true"/>
+
+            <item android:id="@+id/nav_view_image"
+                android:title="Hình ảnh"
+                android:icon="@drawable/ic_image"
+                android:checkable="true"/>
+        </menu>
+    </item>
+</menu>
