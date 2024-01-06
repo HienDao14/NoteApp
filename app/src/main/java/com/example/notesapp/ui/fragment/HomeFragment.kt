@@ -88,23 +88,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun onToolBarClicked() {
-        binding.navView.setCheckedItem(R.id.nav_view_home)
         binding.topAppBar.setNavigationOnClickListener {
             binding.drawerLayout.open()
-            Log.d("HomeFragment", "Open")
+            binding.navView.setCheckedItem(R.id.nav_view_home)
         }
             binding.navView.setNavigationItemSelectedListener {menuItem ->
-                Log.d("HomeFragment", "Hehehehe")
                 when(menuItem.itemId){
                     R.id.nav_view_home -> {
-                        Toast.makeText(context, "Home", Toast.LENGTH_SHORT).show()
                     }
                     R.id.nav_view_delete -> {
                         val action = HomeFragmentDirections.actionHomeFragmentToDeletedFragment()
                         findNavController().navigate(action)
                     }
                     else -> {
-                        Toast.makeText(context, "Image", Toast.LENGTH_SHORT).show()
+                        val action = HomeFragmentDirections.actionHomeFragmentToImageFragment()
+                        findNavController().navigate(action)
                     }
                 }
                 menuItem.isChecked = true
